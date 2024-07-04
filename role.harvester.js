@@ -9,16 +9,15 @@ var roleHarvester = {
             
             if (ruinsWithEnergy.length > 0) {
                 creep.say('🔄 Looting Ruin');
-                console.log(`Found ruin with energy: ${ruinsWithEnergy[0]}`);
                 if (creep.withdraw(ruinsWithEnergy[0], RESOURCE_ENERGY) == ERR_NOT_IN_RANGE) {
-                    creep.moveTo(ruinsWithEnergy[0], {visualizePathStyle: {stroke: '#ffaa00'}, reusePath: 10});
+                    creep.moveTo(ruinsWithEnergy[0], {visualizePathStyle: {stroke: '#ffaa00'}, reusePath: 3});
                 }
             } else {
                 // Если нет руин с энергией, ищем ближайший источник энергии
-                creep.say('🔄 Harvesting');
+                // creep.say('🔄 Harvesting');
                 var sources = creep.room.find(FIND_SOURCES);
                 if (creep.harvest(sources[0]) == ERR_NOT_IN_RANGE) {
-                    creep.moveTo(sources[0], {visualizePathStyle: {stroke: '#ffaa00'}, reusePath: 10});
+                    creep.moveTo(sources[0], {visualizePathStyle: {stroke: '#ffaa00'}, reusePath: 3});
                 }
             }
         } else {
@@ -37,7 +36,22 @@ var roleHarvester = {
 
                 if (targets.length > 0) {
                     if (creep.transfer(targets[0], RESOURCE_ENERGY) == ERR_NOT_IN_RANGE) {
-                        creep.moveTo(targets[0], {visualizePathStyle: {stroke: '#ffffff'}, reusePath: 10});
+                        creep.moveTo(targets[0], {visualizePathStyle: {stroke: '#ffffff'}, reusePath: 3});
+                    }
+                } else {
+                    var containers = creep.room.find(FIND_STRUCTURES, {
+                        filter: (structure) => {
+                            return (structure.structureType == STRUCTURE_CONTAINER || 
+                                    structure.structureType == STRUCTURE_STORAGE) &&
+                                    structure.store.getFreeCapacity(RESOURCE_ENERGY) > 0;
+                        }
+                    });
+                    if (containers.length > 0) {
+                        if (creep.transfer(containers[0], RESOURCE_ENERGY) == ERR_NOT_IN_RANGE) {
+                            creep.moveTo(containers[0], {visualizePathStyle: {stroke: '#ffaa00'}, reusePath: 3});
+                        }
+                    } else {
+                        creep.moveTo(40, 33); // Действие по умолчанию, если нет контейнеров с энергией
                     }
                 }
             } else {
@@ -51,7 +65,7 @@ var roleHarvester = {
 
                 if (containers.length > 0) {
                     if (creep.transfer(containers[0], RESOURCE_ENERGY) == ERR_NOT_IN_RANGE) {
-                        creep.moveTo(containers[0], {visualizePathStyle: {stroke: '#ffffff'}, reusePath: 10});
+                        creep.moveTo(containers[0], {visualizePathStyle: {stroke: '#ffffff'}, reusePath: 3});
                     }
                 }
             }

@@ -10,7 +10,7 @@ var roleDefender = {
             creep.say(anamy)
         } else {
             // Optional: Move to a designated guard post if no enemies are found
-            var guardPost = new RoomPosition(20, 22, creep.room.name); // Example position
+            var guardPost = new RoomPosition(19, 36, creep.room.name); // Example position
             creep.moveTo(guardPost, {visualizePathStyle: {stroke: '#00ff00'}});
         }
     }

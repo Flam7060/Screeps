@@ -16,11 +16,11 @@ module.exports.loop = function () {
     }
     
     var spawn = Game.spawns['Spawn1'];
-    var desiredHarvesterCount = 6;
-    var desiredUpgraderCount = 4;
-    var desiredBuilderCount = 2;
+    var desiredHarvesterCount = 7;
+    var desiredUpgraderCount = 0;
+    var desiredBuilderCount = 4;
     var desiredDefenderCount = 2; 
-    var desiredRepairerCount = 1;
+    var desiredRepairerCount = 0;
     
 
     var harvesters = _.filter(Game.creeps, (creep) => creep.memory.role == 'harvester');
@@ -32,9 +32,9 @@ module.exports.loop = function () {
     var totalEnergy = utils.getTotalEnergyInRoom(spawn.room);
     // console.log('Total energy in room:', totalEnergy);
     
-    var harvester_body = [MOVE, MOVE, WORK, WORK, CARRY, CARRY];
+    var harvester_body = [MOVE, MOVE, WORK,WORK, WORK, CARRY, CARRY];
     var upgrader_body  = [MOVE, MOVE, WORK, WORK, CARRY, CARRY];
-    var builder_body  = [MOVE, MOVE, WORK, WORK, CARRY, CARRY];
+    var builder_body  = [MOVE, WORK, WORK, CARRY, CARRY,CARRY];
     var defender_body  = [ATTACK,ATTACK, ATTACK, MOVE, MOVE]
     var repairer_body  = [MOVE, MOVE, WORK, WORK, CARRY, CARRY];
 
